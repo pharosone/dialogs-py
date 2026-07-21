@@ -1,0 +1,47 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pharosone-dialogs"
+version = "0.1.0"
+description = "Zero-dependency Python client for the PharosOne dialog ingest API (upsert-agent, send-message, send-dialog)."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.10"
+keywords = ["pharosone", "dialogs", "chatbot", "analytics", "api-client"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Typing :: Typed",
+]
+dependencies = []
+
+[project.optional-dependencies]
+# Test-only extras: the instrument/ wrappers and integrations are pure
+# duck-typing and never import these at runtime — they exist solely so CI can
+# optionally exercise the wrappers against the real provider SDKs. The
+# bundled unittest suite uses hand-built fakes and needs none of them.
+instrument-test = ["openai", "anthropic"]
+
+[project.urls]
+Homepage = "https://app.pharosone.ai/docs/sdks"
+Source = "https://github.com/pharosone/dialogs-py"
+Issues = "https://github.com/pharosone/dialogs-py/issues"
+
+[tool.setuptools]
+packages = [
+    "pharosone_dialogs",
+    "pharosone_dialogs.instrument",
+    "pharosone_dialogs.integrations",
+]
+
+[tool.setuptools.package-data]
+pharosone_dialogs = ["py.typed"]
