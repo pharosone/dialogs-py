@@ -11,7 +11,7 @@ Quickstart::
     client = wrap_openai(OpenAI(), pharos=pharos, agent_id="support-bot")
 
     with pharos_session("sess-42"):
-        client.chat.completions.create(model="gpt-4o-mini", messages=[...])
+        client.chat.completions.create(model="gpt-5.5", messages=[...])
 
 Zero new dependencies: ``openai`` / ``anthropic`` are never imported — the
 wrappers are duck-typed proxies. Flushing happens fire-and-forget on a daemon

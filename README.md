@@ -10,7 +10,36 @@ snapshots. Python 3.10+, stdlib only (`urllib.request`).
 pip install pharosone-dialogs
 ```
 
-## Quickstart
+## Quickstart — instrument an existing client (zero-touch)
+
+Already calling OpenAI or Anthropic? Wrap the client once and every completed
+chat call is mirrored to PharosOne — no manual send calls, the provider
+response is returned unchanged:
+
+```python
+from openai import OpenAI
+from pharosone_dialogs import PharosOne
+from pharosone_dialogs.instrument import wrap_openai, pharos_session
+
+pharos = PharosOne(base_url="https://pharosone.example.com", api_key="sk-...")
+client = wrap_openai(OpenAI(), pharos=pharos, agent_id="support-bot")
+
+with pharos_session("sess-42"):              # bind the dialog id
+    client.chat.completions.create(          # your call, unchanged — now mirrored
+        model="gpt-5.5",
+        messages=[{"role": "user", "content": "Where is my order?"}],
+    )
+```
+
+`wrap_anthropic` does the same for Anthropic, and any OpenAI-compatible
+endpoint (Ollama, vLLM, OpenRouter, Azure) works through `wrap_openai`. Full
+details — streaming, session binding, tool calls, LangChain / LiteLLM — are in
+[Instrument an existing client](#instrument-an-existing-client-zero-touch)
+below.
+
+## Send messages manually
+
+No provider client to wrap (or you want full control)? Post each turn yourself:
 
 ```python
 from pharosone_dialogs import PharosOne
@@ -160,7 +189,7 @@ client = wrap_openai(OpenAI(), pharos=pharos, agent_id="support-bot")
 
 with pharos_session("sess-42"):                 # bind the dialog id
     reply = client.chat.completions.create(     # your call, unchanged
-        model="gpt-4o-mini",
+        model="gpt-5.5",
         messages=[{"role": "user", "content": "Where is my order?"}],
     )
 ```

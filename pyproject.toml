@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pharosone-dialogs"
-version = "0.1.0"
+version = "0.1.1"
 description = "Zero-dependency Python client for the PharosOne dialog ingest API (upsert-agent, send-message, send-dialog)."
 readme = "README.md"
 license = "MIT"
